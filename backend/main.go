@@ -1,14 +1,12 @@
 package main
 
-import "github.com/labstack/echo"
+import (
+	"FitMood/backend/route"
+)
 
 func main() {
-	// new Echo instance
-	e := echo.New()
-
-	e.GET("/", func(c echo.Context) error {
-		return c.JSONPretty(200, "Homepage", "")
-	})
+	// router config
+	e := route.NewRouter()
 
 	e.Logger.Fatal(e.Start(":8080"))
 
