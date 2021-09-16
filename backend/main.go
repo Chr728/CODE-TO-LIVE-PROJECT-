@@ -1,13 +1,22 @@
 package main
 
 import (
-	"FitMood/backend/route"
+	"FitMood/backend/api"
+	"fmt"
+	"log"
 )
 
 func main() {
 	// router config
-	e := route.NewRouter()
+	//e := route.NewRouter()
+	//e.Logger.Fatal(e.Start(":8008"))
 
-	e.Logger.Fatal(e.Start(":8080"))
 
+	spotifyApi := api.New()
+	spotifyInterface := api.InterfaceSpotify(spotifyApi)
+	err := spotifyInterface.Authorization()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	fmt.Println(spotifyInterface.SearchPlaylist())
 }

@@ -6,7 +6,7 @@ ENV GO111MODULE=on \
     GOOS=linux \
     GOARCH=amd64
 
-WORKDIR /app/backend
+WORKDIR /fillmood/backend
 
 COPY go.mod .
 COPY go.sum .
@@ -20,7 +20,7 @@ COPY . .
 RUN go build -o main .
 
 # Export necessary port
-EXPOSE 3001
+EXPOSE 8008
 
 # Command to run when starting the container
-CMD ["/app/backend/main"]
+CMD ["/fillmood/backend/main"]

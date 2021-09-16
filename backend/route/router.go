@@ -7,7 +7,6 @@ func NewRouter() *echo.Echo{
 	// new Echo instance
 	e := echo.New()
 
-
 	//Endpoints
 	e.GET("/", Homepage)
 	e.GET("/getmood", GetMood)
