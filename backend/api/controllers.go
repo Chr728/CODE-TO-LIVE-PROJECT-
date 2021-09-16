@@ -8,7 +8,10 @@ import (
 	"net/http"
 )
 
-
+//SearchPlaylist
+//fetch Spotify Playlist
+//Inputs playlistsID string
+// Return Playlist Details
 func (s *AuthorizationResponse) SearchPlaylist() interface{} {
 	auth := fmt.Sprintf("Bearer %s", s.AccessToken)
 	var params string
@@ -16,13 +19,7 @@ func (s *AuthorizationResponse) SearchPlaylist() interface{} {
 	data := "?market=ES&fields=description%2C%20external_urls%2C%20id%2C%20images%2C%20name%2C%20owner%2C%20"
 	endpoint := fmt.Sprintf("https://api.spotify.com/v1/playlists/%s%s", params, data)
 
-	////add field params to request
-	//fieldParams := url.Values{}
-	//fieldParams.Add("market", "US")
-	//fieldParams.Add("fields", "description")
-	//fieldParams.Add("fields", "external_urls")
-	//reqBody := strings.NewReader(fieldParams.Encode())
-	//NewRequest for playlist
+
 	req, err := http.NewRequest("GET", endpoint, nil)
 	if err != nil {
 		log.Fatal(err.Error())

@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/alessiosavi/Requests v0.3.8 // indirect
+	github.com/joho/godotenv v1.3.0 // indirect
 	github.com/labstack/echo v3.3.10+incompatible // indirect
 	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/zmb3/spotify/v2 v2.0.0 // indirect

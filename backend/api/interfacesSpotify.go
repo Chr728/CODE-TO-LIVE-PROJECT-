@@ -1,6 +1,6 @@
 package api
 
 type InterfaceSpotify interface {
-	Authorization()	error
+	Authorization(clientId, clientSecret string)	error
 	SearchPlaylist() interface{}
 }

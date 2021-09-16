@@ -12,7 +12,6 @@ import (
 )
 
 const (
-
 	token_url = "https://accounts.spotify.com/api/token"
 )
 
@@ -23,9 +22,12 @@ type AuthorizationResponse struct {
 	ExpiresAt   time.Time    `json:"expires_at"`
 }
 
-func generateAuthorizeStr() string{
+// GenerateAuthorizeToken
+//get Spotiy token
+func GenerateAuthorizeToken(clientId, clientSecret string) string{
 	//get auth string
-	cli_cred_encoded := fmt.Sprintf("%s:%s", client_id, client_secret)
+
+	cli_cred_encoded := fmt.Sprintf("%s:%s", clientId, clientSecret )
 
 	//convert client string to base64 encoding
 	cli_cred_encoded_b64 := base64.StdEncoding.EncodeToString([]byte(cli_cred_encoded))
@@ -36,25 +38,29 @@ func generateAuthorizeStr() string{
 	return authorizationStr
 }
 
+// New
+// New instance of authorization class
 func New() *AuthorizationResponse {
 	return &AuthorizationResponse{}
 }
 
-
-func (s *AuthorizationResponse) Authorization() error{
-
+//Authorization
+//authorise the Spotify Api
+// Return error
+func (s *AuthorizationResponse) Authorization(clientId, clientSecret string) error{
+	//parse params in request
 	params := url.Values{}
 	params.Add("grant_type", `client_credentials`)
 	reqbody := strings.NewReader(params.Encode())
 
 
-
+	// create request
 	req, err := http.NewRequest("POST", token_url, reqbody)
 	if err != nil {
 		return err
 	}
-
-	req.Header.Set("Authorization", generateAuthorizeStr())
+	//set request headers
+	req.Header.Set("Authorization", GenerateAuthorizeToken(clientId,clientSecret))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	//fmt.Println(req)
 	res, err := http.DefaultClient.Do(req)
@@ -68,7 +74,6 @@ func (s *AuthorizationResponse) Authorization() error{
 	if err != nil {
 		return err
 	}
-
 
 	err = json.Unmarshal(body, &s);
 
