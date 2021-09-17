@@ -15,7 +15,8 @@ import (
 func (s *AuthorizationResponse) SearchPlaylist(params string) interface{} {
 	auth := fmt.Sprintf("Bearer %s", s.AccessToken)
 
-	data := "?market=ES&fields=description%2C%20external_urls%2C%20id%2C%20images%2C%20name%2C%20owner%2C%20"
+	data := "?market=ES&fields=description%2C%20external_urls%2C%20id%2C%20images%2C%20name%2C%20"
+	//owner%2C%20"
 	endpoint := fmt.Sprintf("https://api.spotify.com/v1/playlists/%s%s", params, data)
 
 
