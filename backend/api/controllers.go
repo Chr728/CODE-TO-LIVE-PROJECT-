@@ -12,10 +12,9 @@ import (
 //fetch Spotify Playlist
 //Inputs playlistsID string
 // Return Playlist Details
-func (s *AuthorizationResponse) SearchPlaylist() interface{} {
+func (s *AuthorizationResponse) SearchPlaylist(params string) interface{} {
 	auth := fmt.Sprintf("Bearer %s", s.AccessToken)
-	var params string
-	params = "3cEYpjA9oz9GiPac4AsH4n"
+
 	data := "?market=ES&fields=description%2C%20external_urls%2C%20id%2C%20images%2C%20name%2C%20owner%2C%20"
 	endpoint := fmt.Sprintf("https://api.spotify.com/v1/playlists/%s%s", params, data)
 

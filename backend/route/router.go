@@ -7,14 +7,14 @@ import (
 )
 
 
-
-
 var secrets, err = config.LoadSecrets(false)
 
 //NewRouter
 //New instance of server
 func NewRouter() *echo.Echo{
-	spotifyApiController := &endpointsControllers.ApiInterface{}
+
+	//Endpoints handlers Interface
+	spotifyApiController := endpointsControllers.NewControllers()
 	spotifyApiController.SpotifyAPI(secrets.SpotifyClientID, secrets.SpotifyClientSecret)
 
 
@@ -22,17 +22,14 @@ func NewRouter() *echo.Echo{
 	e := echo.New()
 
 	//Endpoints
-	e.GET("/", Homepage)
-	e.GET("/getmoodplayist", spotifyApiController.GetMoodPlaylist)
+	e.GET("/", endpointsControllers.Homepage)
+	e.GET("/getmoodplayist", spotifyApiController.GetMoodPlaylists)
+	e.GET("/selectmoodplayist", spotifyApiController.SelectMoodPlaylists)
+	e.GET("/addplayist", spotifyApiController.AddPlaylistLibrary)
+	e.GET("/suggestplayist", spotifyApiController.SuggestPlaylistLibrary)
 
 	return e
-
 }
 
-func Homepage( c echo.Context) error{
-		return c.JSONPretty(200, "server up", "")
-}
 
-func GetMood( c echo.Context) error{
-	return c.JSONPretty(200, "get mood request", "")
-}
+
