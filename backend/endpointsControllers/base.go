@@ -70,6 +70,12 @@ func MessageResponse(c echo.Context, status int, message string) error {
 		Success: status <= 201,
 	}, " ")
 }
+func MessageResponseForward(c echo.Context, status int, message string) error {
+	return c.JSONPretty(status, Error{
+		Message: message,
+		Success: false,
+	}, " ")
+}
 
 func DataResponse(c echo.Context, status int, data interface{}) error {
 	return c.JSONPretty(status, Data{

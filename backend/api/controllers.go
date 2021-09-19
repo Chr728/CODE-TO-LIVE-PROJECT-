@@ -15,7 +15,16 @@ type PlaylistModel struct {
 	} `json:"external_urls"`
 	Id     string `json:"id"`
 	Name string `json:"name"`
+	Event	string	`json:"event"`
+	Images []struct {
+		Height interface{} `json:"height"`
+		Url    string      `json:"url"`
+		Width  interface{} `json:"width"`
+	} `json:"images"`
+	ImageUrl	string	`json:"image_url"`
 }
+
+
 
 
 
@@ -26,7 +35,7 @@ type PlaylistModel struct {
 func (s *AuthorizationResponse) SearchPlaylist(params string) PlaylistModel {
 	auth := fmt.Sprintf("Bearer %s", s.AccessToken)
 
-	data := "?market=ES&fields=description%2C%20external_urls%2C%20id%2C%20images%2C%20name%2C%20"
+	data := "?market=ES&fields=description%2C%20external_urls%2C%20id%2C%20images%2C%20name%2C%20images%2C%20"
 	//owner%2C%20"
 	endpoint := fmt.Sprintf("https://api.spotify.com/v1/playlists/%s%s", params, data)
 
@@ -60,6 +69,9 @@ func (s *AuthorizationResponse) SearchPlaylist(params string) PlaylistModel {
 	err = json.Unmarshal(body,&v)
 	if err != nil {
 		log.Fatal(err.Error())
+	}
+	if playlistModel.Images != nil{
+		playlistModel.ImageUrl = playlistModel.Images[0].Url
 	}
 
 	return playlistModel
