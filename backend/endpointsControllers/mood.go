@@ -7,28 +7,59 @@ import (
 
 type ApiInterface struct {
 	spotify               	api.InterfaceSpotify
-	playlistLib				*[]map[string]interface{}
+	playlistLib				*[]map[string]api.PlaylistModel
 }
 
 func NewControllers() *ApiInterface {
-	playlistLibData := make([]map[string]interface{},0)
+	playlistLibData := make([]map[string]api.PlaylistModel,0)
 	//create default mood playlist
 	//happy---
-	happyPlaylist := make(map[string]interface{})
-	happyPlaylist["happy"] = "3cEYpjA9oz9GiPac4AsH4n"
+	happyPlaylist := make(map[string]api.PlaylistModel)
+	//create playlist
+	happyPlaylist["happy"] = api.PlaylistModel{
+		Description: "",
+		ExternalUrls: struct {
+			Spotify string `json:"spotify"`
+		}{},
+		Id:   "3cEYpjA9oz9GiPac4AsH4n",
+		Name: "",
+	}
 	playlistLibData = append(playlistLibData,happyPlaylist)
+
 	//happy 200
-	happyPlaylist2 := make(map[string]interface{})
-	happyPlaylist2["happy"] = "playlistHappy"
+	happyPlaylist2 := make(map[string] api.PlaylistModel)
+	happyPlaylist2["happy"] =  api.PlaylistModel{
+		Description: "",
+		ExternalUrls: struct {
+			Spotify string `json:"spotify"`
+		}{},
+		Id:   "happyplaylist",
+		Name: "",
+	}
+
 	playlistLibData = append(playlistLibData,happyPlaylist2)
 	//sad
-	sadPlaylist := make(map[string]interface{})
-	sadPlaylist["sad"] = "playlistSad"
+	sadPlaylist := make(map[string]api.PlaylistModel)
+	sadPlaylist["sad"] = api.PlaylistModel{
+		Description: "",
+		ExternalUrls: struct {
+			Spotify string `json:"spotify"`
+		}{},
+		Id:   "sadplaylist",
+		Name: "",
+	}
 	playlistLibData = append(playlistLibData,sadPlaylist)
 
 	//chilling
-	chillingPlaylist := make(map[string]interface{})
-	chillingPlaylist["chilling"] = "playlistChilling"
+	chillingPlaylist := make(map[string]api.PlaylistModel)
+	chillingPlaylist["chilling"] = api.PlaylistModel{
+		Description: "",
+		ExternalUrls: struct {
+			Spotify string `json:"spotify"`
+		}{},
+		Id:   "chillingplaylist",
+		Name: "",
+	}
 	playlistLibData = append(playlistLibData,chillingPlaylist)
 
 
@@ -48,19 +79,19 @@ func (s *ApiInterface) SpotifyAPI(clientID, clientSecret string)  {
 
 }
 
-func (s *ApiInterface) AddPlaylist(mood, playlist string) {
+func (s *ApiInterface) AddPlaylist(mood string, playlist api.PlaylistModel ) {
 
 	//get a playlist
-	m := make(map[string]interface{})
+	m := make(map[string]api.PlaylistModel)
 	m[mood] = playlist
 	// append to list of playist (a slice map of [mood]playlistData)
 	*s.playlistLib = append(*s.playlistLib, m)
 
 }
 
-func (s *ApiInterface) GetPlaylistbyMood(mood string) []interface{}{
+func (s *ApiInterface) GetPlaylistbyMood(mood string) []api.PlaylistModel{
 	//range over backend playlistsdata, and provide most suitable results
-	playlists := make([]interface{},0)
+	playlists := make([]api.PlaylistModel,0)
 	for _,v := range *s.playlistLib{
 
 		if playlist, ok := v[mood]; ok{
@@ -71,8 +102,8 @@ func (s *ApiInterface) GetPlaylistbyMood(mood string) []interface{}{
 	return playlists
 }
 
-func (s *ApiInterface) RandomPlaylist() []interface{}{
-	playlists := make([]interface{},0)
+func (s *ApiInterface) RandomPlaylist() []map[string]api.PlaylistModel{
+	playlists := make([]map[string]api.PlaylistModel,0)
 	for _, v := range *s.playlistLib{
 		playlists = append(playlists, v)
 	}

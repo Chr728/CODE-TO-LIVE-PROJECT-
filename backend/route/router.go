@@ -38,13 +38,16 @@ func NewRouter() *echo.Echo{
 
 	//Endpoints
 	e.GET("/", endpointsControllers.Homepage)
-	e.GET("/getmoodplayist", spotifyApiController.GetMoodPlaylists)
-	e.GET("/selectmoodplayist", spotifyApiController.SelectMoodPlaylists)
+	e.POST("/playlists", spotifyApiController.GetMoodPlaylists)
+	e.GET("/playlist", spotifyApiController.SelectMoodPlaylists)
 	e.GET("/addplayist", spotifyApiController.AddPlaylistLibrary)
 	e.GET("/suggestplayist", spotifyApiController.SuggestPlaylistLibrary)
 
+	//test
+	//e.GET("/friends", friendsEndpoint)
 	return e
 }
+
 
 
 

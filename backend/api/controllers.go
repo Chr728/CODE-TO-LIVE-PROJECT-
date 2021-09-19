@@ -8,11 +8,22 @@ import (
 	"net/http"
 )
 
+type PlaylistModel struct {
+	Description  string `json:"description"`
+	ExternalUrls struct {
+		Spotify string `json:"spotify"`
+	} `json:"external_urls"`
+	Id     string `json:"id"`
+	Name string `json:"name"`
+}
+
+
+
 //SearchPlaylist
 //fetch Spotify Playlist
 //Inputs playlistsID string
 // Return Playlist Details
-func (s *AuthorizationResponse) SearchPlaylist(params string) interface{} {
+func (s *AuthorizationResponse) SearchPlaylist(params string) PlaylistModel {
 	auth := fmt.Sprintf("Bearer %s", s.AccessToken)
 
 	data := "?market=ES&fields=description%2C%20external_urls%2C%20id%2C%20images%2C%20name%2C%20"
@@ -38,17 +49,19 @@ func (s *AuthorizationResponse) SearchPlaylist(params string) interface{} {
 
 	//get response string
 	var v interface{}
+	var playlistModel PlaylistModel
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
+
+	err = json.Unmarshal(body, &playlistModel)
 	err = json.Unmarshal(body,&v)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	return v
-
+	return playlistModel
 }
 

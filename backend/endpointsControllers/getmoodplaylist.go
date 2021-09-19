@@ -9,7 +9,7 @@ import (
 
 var frontend = false
 func Homepage( c echo.Context) error{
-	return c.JSONPretty(200, "server up", "")
+	return MessageResponse(c, http.StatusOK, "home endpoint")
 }
 
 
@@ -35,7 +35,8 @@ func (s *ApiInterface) GetMoodPlaylists(c echo.Context) error {
 		return c.JSONPretty(200, "playlist not available, mind some suggestions?", "" )
 	}
 
-	return c.JSONPretty(200, playlists, "" )
+	//return c.JSONPretty(200, playlists, "" )
+	return DataResponse(c, http.StatusOK, playlists)
 }
 
 
@@ -61,7 +62,9 @@ func (s *ApiInterface) SelectMoodPlaylists(c echo.Context) error {
 		p = "3cEYpjA9oz9GiPac4AsH4n"
 	}
 
-	p = playlists[0].(string)
+
+
+	p = playlists[0].Id
 
 	playlist := s.spotify.SearchPlaylist(p)
 
@@ -87,7 +90,11 @@ func (s *ApiInterface) AddPlaylistLibrary(c echo.Context) error{
 	}
 
 	fmt.Println(params.Mood,params.Playlist)
-	s.AddPlaylist(params.Mood, params.Playlist)
+
+	playlist := s.spotify.SearchPlaylist(params.Playlist)
+
+
+	s.AddPlaylist(params.Mood,playlist)
 
 	return c.JSON(http.StatusCreated, s.RandomPlaylist())
 }
