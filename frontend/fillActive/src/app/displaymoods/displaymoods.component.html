@@ -1,0 +1,33 @@
+
+
+<div class="container">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>FitEvent</th>
+      <th>Playlist Name</th>
+      <th>Playlist ID</th>
+      <th>Playlist Description</th>
+      <th>Redirected URL</th>
+    </tr>
+    </thead>
+
+
+      <tbody>
+      <tr *ngFor="let data of responsedata; let i = index">
+        <td><span>{{data.event}}</span></td>
+        <td><span>{{data.name}}</span></td>
+        <td><span>{{data.id}}</span></td>
+        <td><span><a>{{data.description}}</a></span></td>
+        <td><span><a href={{data.external_urls.spotify}} target="_blank">>Go to Playlist</a></span></td>
+        <td><span><img src={{data.image_url}} alt={{data.name}} width="80"
+                       height="80"></span></td>
+      </tr>
+      <tr><a href="/displaymood">{{message}}</a></tr>
+    </tbody>
+
+
+  </table>
+</div>
+
+
